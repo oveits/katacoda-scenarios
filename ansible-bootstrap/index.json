@@ -2,12 +2,21 @@
   "title": "Ansible Bootstrapping (via git, WIP)",
   "description": "Learn how to connect to a target",
   "difficulty": "beginner",
-  "time": "2 minutes",
+  "time": "15 minutes",
   "details": {
     "steps": [{
-      "title": "Step 1 - Run Command",
+      "title": "Step 1 - Prepare Environment for easier Toggling between Ansible and Target System",
       "text": "step1.md"
-    }],
+    },
+    {
+      "title": "Step 2 - Verify the Ansible Installation",
+      "text": "step2.md"
+    },
+    {
+      "title": "Step 3 - Prepare Remote Target: Install SSH",
+      "text": "step3.md"
+    }
+    ],
     "intro": {
       "text": "intro.md",
       "credits": ""
