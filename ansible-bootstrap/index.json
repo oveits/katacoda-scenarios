@@ -23,6 +23,9 @@
 		}, {
 			"title": "Step 6 - Connect from Ansible host to Target",
 			"text": "step6.md"
+		}, {
+			"title": "Step 7 - Remotely Perform a Shell Command on the Target",
+			"text": "step7.md"
 		}
 		],
 		"intro": {
