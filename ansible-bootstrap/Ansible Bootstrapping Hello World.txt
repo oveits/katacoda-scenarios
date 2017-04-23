@@ -1,0 +1,432 @@
+Ansible Bootstrapping Hello World
+
+Learn how to connect form Ansible hosts to target systems
+
+# Intro Text
+
+In this tutorial, we will learn, how to prepare a target system, so an Ansible system can connect to it.
+
+# Environment Customization
+
+mkdir shared_volume
+docker pull williamyeh/ansible:ubuntu14.04-onbuild
+docker network create mynetwork
+cd shared_volume
+docker run -d --name ansible --rm --network mynetwork -v $(pwd):/shared_volume williamyeh/ansible:ubuntu14.04-onbuild /bin/bash -c 'while true; do sleep 60; echo keepalive; done'
+docker run -d --name target --rm --network mynetwork -v $(pwd):/shared_volume ubuntu:14.04 /bin/bash -c 'apt-get update; apt-get install -y openssh-server;service ssh start; while true; do sleep 60; echo keepalive; done'
+A() { docker exec -i ansible $*; }
+T() { docker exec -i target $*; }
+a() { docker exec -it ansible bash; }
+t() { docker exec -it target bash; }
+a() { docker exec -it ansible bash -c "echo 'PS1='\''ansible# '\' >> /root/.bashrc; bash"; }
+sleep 30
+
+# 1. Prepare Environment for easier Toggling between Ansible and Target System
+
+To make our lives easier later, let us define the commands "a" and "t" for quickly connecting from the base system to the ansible and target container: 
+
+Connect to the Ansible container:
+
+```a() { docker exec -it ansible bash -c "echo 'PS1='\''ansible# '\' >> /root/.bashrc; bash"; } ```{{execute HOST1}} 
+
+Connect to the Target container:
+
+```
+t() {  docker exec -it target bash -c "echo 'PS1='\''target# '\' >> /root/.bashrc; bash";  } ```{{execute HOST1}} 
+
+In this tutorial, we already have started an ansible and a target container in the background. However, they have been started in the background, and they need some time to become available. Repeat using a docker ps command to check, whether Docker containers named 'ansible' and 'target' have been started already:
+
+`docker ps`{{execute HOST1}}
+
+Repeat sending the command until it looks similar to 
+<pre>
+CONTAINER ID      IMAGE                                   COMMAND                 CREATED         STATUS
+            PORTS NAMES
+c96e3a45e164      ubuntu:14.04                            "/bin/bash -c 'whi..."  11 seconds ago  Up 9 seconds target
+caf61a258abb      williamyeh/ansible:ubuntu14.04-onbuild  "/bin/bash -c 'whi..."  13 seconds ago  Up 11 seconds ansible
+</pre>
+
+# 2. Verify Ansible installation
+
+# Check Ansible Version
+
+As soon as the ansible container are seen in the docker ps command, we should be able to connect to the Ansible container using our definition from the previous step:
+`a`{{execute HOST1}}
+
+Let us verify the Ansible installation by running the command:
+`ansible --version`{{execute HOST1}}
+
+The output should look similar to:
+<pre>
+ansible 2.3.0.0
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = Default w/o overrides
+  python version = 2.7.6 (default, Oct 26 2016, 20:30:19) [GCC 4.8.4]
+</pre>
+
+# Check Local Execution
+
+We now can "ping" our local machine:
+`ansible all -i 'localhost,' -c local -m ping`{{execute HOST1}}
+
+> Note that an ansible ping is not an ICMP request, as you might expect. Instead, it is a test of the SSH connection. However, we have used an Ansible command with `-c local` option. This option tells Ansible to bypass the network, so the Ansible client can execute local commands without the need of any connection.
+
+# Check Remote Connections
+The same Ansible ping will fail, if run it without the `-c local` flag:
+
+`ansible all -i 'localhost,' -m ping`{{execute HOST1}}
+
+This will lead to following error:
+
+<pre style="color: red"> localhost | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host localhost port 22: Connection refused\r\n",
+    "unreachable": true
+}
+</pre>
+
+The same will occur, when wir specify our remote target instead of 'localhost':
+
+`ansible all -i 'target,' -m ping`{{execute HOST1}}
+
+We will resolve this issue during the next steps.
+# Next Step: Prepare Remote Target
+
+Let us exit from the ansible container 
+
+`exit`{{execute HOST1}}
+
+and enter the target container:
+
+`t`{{execute HOST1}} 
+
+In our case, the target is an Ubuntu machine with no SSH server installed. Let us do that now:
+
+`apt-get update; apt-get install -y openssh-server;service ssh start`{{execute HOST1}}
+
+# Goto 3
+
+obsolete:
+# Next Step: Create SSH Key on Ansible Container
+
+In order to be able to connect from the Ansible container to the target container, we need to create a private + public SSH key pair on Ansible and copy the public key to the target machine.
+
+For that, let us exit from the target container 
+
+`exit`{{execute HOST1}}
+
+and enter the ansible container again.
+
+`a`{{execute HOST1}} 
+
+On the ansible system, let us generate a SSH key pair like follows: 
+`ssh-keygen -t rsa`{{execute HOST1}} 
+
+Just keep the defaults, click into the black terminal space and press return three times.
+
+This will generate ~/.ssh/id_rsa.pub and ~/.ssh/id_rsa on the ~/.ssh directory:
+
+`ls -ltr ~/.ssh`{{execute HOST1}} 
+
+Let us copy the public key to a shared folder, we have prepared beforehand.
+
+`cp ~/.ssh/id_rsa.pub /shared_volume/ansible_id_rsa.pub`{{execute HOST1}}
+
+Now we need to connect to our target again:
+
+`exit`{{execute HOST1}}
+
+
+`t`{{execute HOST1}}
+
+# Append public key to target's authorized_keys file
+
+The public SSH key of ansible needs to be appended to the list of authorized_keys:
+
+```[ ! -d ~/.ssh ] && mkdir ~/.ssh;
+cat /shared_volume/ansible_id_rsa.pub >> ~/.ssh/authorized_keys`
+```{{execute HOST1}}
+
+# Next Step: Connect to remote Target
+
+Now is the time to re-run the Ansible ping to the target. For that, we log in to the ansible container again:
+
+`exit`{{execute HOST1}}
+
+
+`a`{{execute HOST1}}
+
+
+Now we test the connection, that had failed previously:
+
+`ansible all -i 'target,' -m ping`{{execute HOST1}}
+
+This time we get following output, if we confirm the fingerprint with a `yes`{{execute HOST1}}:
+<pre>
+The authenticity of host 'target (172.19.0.3)' can't be established.
+ECDSA key fingerprint is 6e:f4:bb:e2:40:b8:1b:bc:fc:96:61:d3:50:59:12:e7.
+Are you sure you want to continue connecting (yes/no)? yes
+<span style="color: green">target | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}</span>
+</pre>
+
+
+> Achievements: we have prepared the successful connection from an Ansible system to a target system by
+> 1. installing an ssh server on the target
+> 2. creating an SSH key pair on the Ansible system
+> 3. copying the public key to the target system
+> We have tested the connection by using an Ansible "ping", which is an SSH connection, actually.
+
+
+
+
+
+
+
+Now open a new terminal by clicking on the + sign right of the Terminal tab (otherwise, the next command will not work).
+
+In the second terminal, we run a separate Docker container. This will be our target system.
+
+`cd shared_volume; docker run -it --name target --rm --network mynetwork -v $(pwd):/shared_volume ubuntu:14.04 bash`{{execute HOST2}}
+
+On the target system, we install and start a SSH Server:
+
+`apt-get update; apt-get install -y openssh-server;service ssh start`{{execute HOST2}}
+
+On the ansible system Terminal 1), let us generate a SSH key pair like follows:
+`ssh-keygen -t rsa`{{execute HOST1}} 
+
+Just keep the defaults and press return three times.
+
+
+Now we will add the public key of the ansible host to the list of authorized keys of the target host. For that, we make use of a shared_volume between Docker host and the two Docker containers:
+
+`cp ~/.ssh/id_rsa.pub /shared_volume/ansible_id_rsa.pub`{{execute HOST1}}
+
+The public SSH key needs to be appended to the list of ansible's
+
+`mkdir ~/.ssh; cat /shared_volume/ansible_id_rsa.pub >> ~/.ssh/authorized_keys`{{execute HOST2}}
+
+Now let us try to connect to localhost via SSH using Ansible:
+`ansible all -i 'target,' -m ping`{{execute HOST1}}
+
+This time you should see:
+
+<span style="color: green">
+```
+target | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+```
+</span>
+it should work.
+
+
+# Try to connect to localhost via SSH using Ansible
+
+Now try the same Ansible ping without `-c local` option, forcing Ansible to connect via SSH.
+
+Let us check the status of the SSH service first:
+`service ssh status`{{execute HOST1}}
+
+If it is not up and running, let us install and start an SSH server:
+`apt-get update; apt-get install -y openssh-server;service ssh start`{{execute HOST1}}
+
+`service ssh status`{{execute HOST1}}
+
+Now we try to connect to localhost using ansible
+`ansible all -i 'localhost,' -m ping`{{execute HOST1}}
+
+Accept the fingerprint by typing `yes`{{execute HOST1}}.
+
+We get an error message: <span style="color:red">Permission denied (publickey,password).</span>
+
+The reason gets clearer, when we try to ssh to the localhost:
+
+`ssh localhost`{{execute HOST1}}
+
+The system is asking for a root password. Instead of allowing users to log in with username and password, we will create and deploy a SSH key pair to source and target in the next step.
+
+# Prepare the SSH key and try again to connect to localhost via SSH using Ansible
+
+Let us generate a SSH key pair like follows:
+`ssh-keygen -t rsa`{{execute HOST1}} 
+
+Now we will add the public key to the list of authorized keys of the ansible host:
+
+`cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`{{execute HOST1}}
+
+Let us try again to connect to localhost via SSH using Ansible:
+`ansible all -i 'localhost,' -m ping`{{execute HOST1}}
+
+This time it should work.
+
+# Retry connecting to localhost via SSH using Ansible
+
+
+Now open a new terminal by clicking on the + sign right of the Terminal tab (otherwise, the next command will not work).
+
+In the second terminal, we run a separate Docker container. This will be our target system.
+
+`cd shared_volume && docker run -it --name target --rm  --link ansible -v $(pwd):/shared_volume ubuntu:14.04 bash`{{execute HOST2}}
+
+On the target system, we install and start a SSH Server:
+
+`apt-get update; apt-get install -y openssh-server;service ssh start`{{execute HOST2}}
+
+On the ansible system, let us generate a SSH key pair like follows:
+`ssh-keygen -t rsa`{{execute HOST1}} 
+
+Just keep the defaults and press return three times.
+
+
+Now we will add the public key of the ansible host to the list of authorized keys of the target host. For that, we make use of a shared_volume between Docker host and the two Docker containers:
+
+`cp ~/.ssh/id_rsa.pub /shared_volume/ansible_id_rsa.pub`{{execute HOST1}}
+
+The public SSH key needs to be appended to the list of ansible's
+
+`mkdir ~/.ssh; cat /shared_volume/ansible_id_rsa.pub >> ~/.ssh/authorized_keys`{{execute HOST2}}
+
+Now let us try to connect to localhost via SSH using Ansible:
+`ansible all -i 'target,' -m ping`{{execute HOST1}}
+
+This time it should work.
+
+
+# Prepare for easier toggling between hosts
+
+Now let us define the commands "a" and "t" for quickly connecting to the ansible and target container:
+
+Connect to the Ansible container:
+
+```
+a() { 
+    docker exec -it ansible bash -c "echo 'PS1='\''ansible# '\' >> /root/.bashrc; bash"; 
+}
+```{{execute HOST1}}
+
+Connect to the Target container:
+
+```
+t() { 
+    docker exec -it target bash -c "echo 'PS1='\''target# '\' >> /root/.bashrc; bash"; 
+}
+```{{execute HOST1}}
+
+We already have started an ansible and a target container in the background. However, it sometimes takes some time to be available. Use a docker ps command to check, whether Docker containers named 'ansible' and 'target' have been started already:
+
+`docker ps`{{execute HOST1}}
+
+As soon as the containers are available, we should be able to connect to the Ansible container:
+`a`{{execute HOST1}}
+
+# 3. Prepare Remote Target: Install SSH
+
+Let us exit from the ansible container 
+
+`exit`{{execute HOST1}}
+
+and enter the target container:
+
+`t`{{execute HOST1}} 
+
+In our case, the target is an Ubuntu machine with no SSH server installed. Let us do that now:
+
+`apt-get update; apt-get install -y openssh-server;service ssh start`{{execute HOST1}}
+
+# 4. Prepare Remote Connection: Create SSH Key on Ansible Host
+
+In order to be able to connect from the Ansible container to the target container, we need to create a private + public SSH key pair on Ansible and copy the public key to the target machine.
+
+For that, let us exit from the target container 
+
+`exit`{{execute HOST1}}
+
+and enter the ansible container again.
+
+`a`{{execute HOST1}} 
+
+On the ansible system, let us generate a SSH key pair like follows: 
+`ssh-keygen -t rsa`{{execute HOST1}} 
+
+Just keep the defaults and press return three times.
+
+This will generate ~/.ssh/id_rsa.pub and ~/.ssh/id_rsa on the ~/.ssh directory:
+
+`ls -ltr ~/.ssh`{{execute HOST1}} 
+
+# 5. Prepare Remote Connection: Transfer SSH public Key to Target
+
+Let us copy the public key to a shared folder, we have prepared beforehand.
+
+`cp ~/.ssh/id_rsa.pub /shared_volume/ansible_id_rsa.pub`{{execute HOST1}}
+
+> In situations, where no shared_volume is available, it is sufficient to copy the content of the file to the clipboard, so we can paste it to the appropriate file on the target.
+
+# Append public key to target's authorized_keys file
+
+In order to inform the target about the ansible host's public SSH key, we need to connect to the target again:
+
+`exit`{{execute HOST1}}
+
+
+`t`{{execute HOST1}}
+
+The public SSH key of ansible needs to be appended to the list of authorized_keys:
+
+`[ ! -d ~/.ssh ] && mkdir ~/.ssh; cat /shared_volume/ansible_id_rsa.pub >> ~/.ssh/authorized_keys`{{execute HOST1}}
+
+Let us review the resulting file:
+
+`cat ~/.ssh/authorized_keys`{{execute HOST1}}
+
+It should contain a line similar to following:
+
+<pre>
+BLA
+</pre>
+
+
+# 6. Connect from Ansible host to Target
+
+Now, since the target knows about the Ansible host's public SSH key, we are ready to connect from the Ansible host to our target:
+
+`exit`{{execute HOST1}}
+
+
+`a`{{execute HOST1}}
+
+
+Now we test the connection, that had failed previously:
+
+`ansible all -i 'target,' -m ping`{{execute HOST1}}
+
+This time we get following output, if we confirm the fingerprint with a `yes`{{execute HOST1}}:
+<pre>
+The authenticity of host 'target (172.19.0.3)' can't be established.
+ECDSA key fingerprint is 6e:f4:bb:e2:40:b8:1b:bc:fc:96:61:d3:50:59:12:e7.
+Are you sure you want to continue connecting (yes/no)? yes
+<span style="color: green">target | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}</span>
+</pre>
+
+Success!
+
+# Finish
+
+# Summary
+
+Let us summarize, what we have achieved so far:
+> We have prepared the successful connection from an Ansible system to a target system by
+> 1. installing an ssh server on the target
+> 2. creating an SSH key pair on the Ansible system
+> 3. copying the public key to the target system
+> We have tested the connection by using an Ansible "ping", which is an SSH connection from the Ansible host to the target, actually.
+
+ 
