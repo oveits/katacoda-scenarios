@@ -1,5 +1,5 @@
 {
-	"title": "Ansible Bootstrapping (via git, WIP)",
+	"title": "Ansible Bootstrapping",
 	"description": "Learn how to connect to a target",
 	"difficulty": "beginner",
 	"time": "15 minutes",
