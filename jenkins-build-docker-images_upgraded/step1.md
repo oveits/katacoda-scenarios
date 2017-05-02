@@ -1,9 +1,30 @@
+Let us prepare a Jenkins Home folder, where the admin user is pre-installed:
+
+`git clone https://github.com/oveits/jenkins_home_alpine && cd jenkins_home_alpine`{{execute}}
+
+Now let us download and run a Jenkins server as a Docker Container like follows:
+
 Let us download and run a Jenkins server as a Docker Container like follows:
+
+`docker run -d -u root --name jenkins \
+    -p 8080:8080 -p 50000:50000 \
+    -v `pwd`:/var/jenkins_home \
+    jenkins:2.46.2-alpine`{{execute}}
+    
+>>>REMOVE    
 
 `docker run -d -u root --name jenkins \
     -p 8080:8080 -p 50000:50000 \
     -v /root/jenkins:/var/jenkins_home \
     jenkins:1.651.1-alpine`{{execute}}
+    
+Latest version (requires login procedure)
+
+`docker run -d -u root --name jenkins \
+    -p 8080:8080 -p 50000:50000 \
+    -v /root/jenkins:/var/jenkins_home \
+    jenkins:2.46.2-alpine`{{execute}}
+<<<<REMOVE
 
 You can view the status using `docker ps`{{execute}}.
 
