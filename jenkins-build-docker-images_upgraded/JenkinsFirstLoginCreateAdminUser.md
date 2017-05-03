@@ -1,8 +1,6 @@
-As described in the Web Page, we need to access the Linux console of the Jenkins container and the access key:
+As described in the Web Page, we need to access the Linux console of the Jenkins container and read the access key from a file. Let us read the contents of the file into a variable named PASS:
 
-
-`docker exec -i jenkins \
-    bash `{{execute}}
+`PASS=$(docker exec -i jenkins cat /var/jenkins_home/secrets/initialAdminPassword)`{{execute}}
 
 cat /var/jenkins_home/
     
