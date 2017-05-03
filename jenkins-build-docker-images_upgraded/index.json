@@ -11,6 +11,10 @@
                 "text": "step1.md"
             },
             {
+                "title": "Create Admin User",
+                "text": "JenkinsFirstLoginCreateAdminUser.md"
+            },
+            {
                 "title": "Configure Docker Plugin",
                 "text": "step2.md"
             },
