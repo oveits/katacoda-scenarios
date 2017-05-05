@@ -1,23 +1,94 @@
+`docker run -d -u root --name jenkins \
+    -p 8080:8080 -p 50000:50000 \
+    -v $(pwd):/var/jenkins_home \
+    jenkins:2.46.2-alpine bash`{{execute}}
+    
+We attach to the container:
+    
+`docker exec -it bash`{{execute}}
+
+Let us initialize Jenkins:
+    
+`cd /var/jenkins_home; /usr/local/bin/jenkins.sh &`{{execute}}
+
+After a minute or two, a config.xml file is created:
+
+`ls -l config.xml*`{{execute}}
+
+secret key:
+
+`sed -i.bak -e '/useSecurity/s/true/false/' config.xml`{{execute}}
+
+We need to restart the jenkins java application for the change to take effect:
+P=$(ps -ef | grep jenkins | grep jar | grep -v grep | awk '\''{ print $2}'\'' ); kill $P
+
+And let us start the jenkins process again:
+
+`java -jar /usr/share/jenkins/jenkins.war`{{execute}}
+
+
+
+
+
+    
+    
+
+
 Let us prepare a Jenkins Home folder, where the admin user is pre-installed:
 
-`git clone https://github.com/oveits/jenkins_home_alpine && cd jenkins_home_alpine`{{execute}}
+`git clone https://github.com/oveits/jenkins_home_alpine jenkins_home && cd jenkins_home`{{execute}}
 
 Now let us download and run a Jenkins server as a Docker Container like follows:
 
 Let us download and run a Jenkins server as a Docker Container like follows:
+
+mkdir jenkins_home; cd jenkins_home
 
 `docker run -d -u root --name jenkins \
     -p 8080:8080 -p 50000:50000 \
     -v $(pwd):/var/jenkins_home \
     jenkins:2.46.2-alpine`{{execute}}
     
-For the purpose of this tutorial, we disable security, so we do not need to go through the hassle of creating an admin user with the initial secret key, so we just disable security:
+For the purpose of this tutorial, we will disable security, so we do not need to go through the hassle of creating an admin user with the initial secret key:
+
+`sed -i.bak -e '/useSecurity/s/true/false/' config.xml`{{execute}}
+
+We need to restart the jenkins java application for the change to take effect:
+P=$(ps -ef | grep jenkins | grep jar | grep -v grep | awk '\''{ print $2}'\'' ); kill $P
+
+  
+
+This will create some file jenkins needs in the jenkins_home directory. Those changes should be synched to the host system, so we should be able to see them on the system:
+
+ls
+
+cat config.xml | grep useSecurity
+
+We can see, that the default is, to run Jenkins with security switched on. For the purpose of this tutorial, we will disable security, so we do not need to go through the hassle of creating an admin user with the initial secret key:
+
+sed -i.bak -e '/useSecurity/s/true/false/' config.xml
+
+Wer have kept the original file as a reference. Let us inspect the difference:
+
+diff config.xml config.xml.bak
+
+For the changes to have an effect, we restart the jenkins application.
+
+Unfortunately, if we restart the container like follows, the config.xml is re-initialized.
+
+
+`docker stop jenkins; docker start jenkins`{{execute}}
+
+Therefore we need to kill the  
+
+
+docker image:
 
 `docker exec jenkins sed -i.bak '/useSecurity/s/true/false/' /var/jenkins_home/config.xml`{{execute}}
 
 For this change to take effect, we restart Jenkins:
 
-`docker stop jenkins; docker start jenkins`
+`docker stop jenkins; docker start jenkins`{{execute}}
     
 >>>REMOVE    
 
