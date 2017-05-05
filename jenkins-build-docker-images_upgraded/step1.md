@@ -10,11 +10,20 @@ Not as root, should run indefinetely:
     --entrypoint bash \
     jenkins:2.46.2-alpine`
 
-Works:
+As root with mapped volume: 
+
    
-`docker run -d --rm --name jenkins \
+`docker run -d -u root --rm --name jenkins \
      -p 8080:8080 -p 50000:50000 \
      -v $(pwd):/var/jenkins_home \
+     --entrypoint /bin/bash \
+     jenkins:2.46.2-alpine \
+     -c "while true; do echo hallo; sleep 60; done"`{{execute}}
+     
+As jenkins without mapped volume:
+
+`docker run -d --rm --name jenkins \
+     -p 8080:8080 -p 50000:50000 \
      --entrypoint /bin/bash \
      jenkins:2.46.2-alpine \
      -c "while true; do echo hallo; sleep 60; done"`{{execute}}
