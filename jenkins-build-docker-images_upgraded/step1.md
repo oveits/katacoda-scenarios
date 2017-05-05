@@ -17,7 +17,7 @@ Works:
      -v $(pwd):/var/jenkins_home \
      --entrypoint /bin/bash \
      jenkins:2.46.2-alpine \
-     -c "while true; do echo hallo; sleep 60; done "
+     -c "while true; do echo hallo; sleep 60; done"`{{execute}}
 
 > Remove:
 `docker run -d -u root --name jenkins \
