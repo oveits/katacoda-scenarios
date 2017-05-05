@@ -1,11 +1,34 @@
+`([ -d "jenkins_home" ] || mkdir jenkins_home) && cd jenkins_home`{{execute}}
+
+Not as root, should run indefinetely:
+
+(does not work: Why?)
+`docker rm jenkins 2>/dev/null; \
+ docker run -it --name jenkins \
+    -p 8080:8080 -p 50000:50000 \
+    -v $(pwd):/var/jenkins_home \
+    --entrypoint bash \
+    jenkins:2.46.2-alpine`
+
+Works:
+   
+`docker run -d --rm --name jenkins \
+     -p 8080:8080 -p 50000:50000 \
+     -v $(pwd):/var/jenkins_home \
+     --entrypoint /bin/bash \
+     jenkins:2.46.2-alpine \
+     -c "while true; do echo hallo; sleep 60; done "
+
+> Remove:
 `docker run -d -u root --name jenkins \
     -p 8080:8080 -p 50000:50000 \
     -v $(pwd):/var/jenkins_home \
-    jenkins:2.46.2-alpine bash`{{execute}}
+    --entrypoint bash \
+    jenkins:2.46.2-alpine`{{execute}}
     
 We attach to the container:
     
-`docker exec -it bash`{{execute}}
+`docker exec -it jenkins bash`{{execute}}
 
 Let us initialize Jenkins:
     
