@@ -8,14 +8,14 @@ First we start the container in detached mode with a while loop. This allows us 
     -p 8080:8080 -p 50000:50000 \
     --entrypoint bash \
     jenkins:2.46.2-alpine \
-    -c "while true; do sleep 60; echo keepalive; done"`{{execute}}
+    -c "tail -F /jenkins.log"`{{execute}}
     
 With the next command, we clone a Jenkins Home directory into the container, before we start the Jenkins application. The Jenkins Home directory has been prepared to allow us using Jenkins without any login:
 
 `docker exec -d jenkins \
     bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
         && export JENKINS_HOME=$(pwd)/jenkins_home_alpine \
-        && java -jar /usr/share/jenkins/jenkins.war &'`{{execute}}
+        && java -jar /usr/share/jenkins/jenkins.war 2&>1 1> /jenkins.log &'`{{execute}}
 
 After a minute or so, we should see that the jenkins.war is started:
 
