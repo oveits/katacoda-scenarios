@@ -1,6 +1,6 @@
 {
     "pathwayTitle": "Jenkins",
-    "title": "Building Docker Images using Jenkins v2.46 (displays an unwanted IDE)",
+    "title": "Building Docker Images using Jenkins",
     "description": "Learn how to configure Jenkins to build Docker Images",
     "difficulty": "Advanced",
     "time": "15-20 minutes",
