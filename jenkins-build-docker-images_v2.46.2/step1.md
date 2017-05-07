@@ -10,7 +10,7 @@ First we start the container in detached mode with a while loop. This allows us 
     jenkins:2.46.2-alpine \
     -c "while true; do sleep 60; echo keepalive; done"`{{execute}}
     
-With the next command, we clone a Jenkins Home into the container, before we start the Jenkins application. The Jenkins Home has been prepare to allow us to use Jenkins without any login:
+With the next command, we clone a Jenkins Home directory into the container, before we start the Jenkins application. The Jenkins Home directory has been prepared to allow us using Jenkins without any login:
 
 `docker exec -d jenkins \
     bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
@@ -23,6 +23,6 @@ After a minute or so, we should see that the jenkins.war is started:
 
 #### Load Dashboard
 
-You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/
+You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/  or by clicking the dashboard tab on the right.
 
 In the next steps, you'll use the dashboard to configure the plugins and start building Docker Images.
