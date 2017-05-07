@@ -1,3 +1,22 @@
+
+
+`docker run -d -u root --rm --name jenkins \
+    -p 8080:8080 -p 50000:50000 \
+    --entrypoint bash \
+    jenkins:2.46.2-alpine \
+    -c "while true; do sleep 60; echo keepalive; done"`{{execute}}
+    
+    
+`docker exec -d jenkins \
+    bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
+        && cd jenkins_home_alpine \
+        && export JENKINS_HOME=`pwd` \
+        && java -jar /usr/share/jenkins/jenkins.war &'`{{execute}}
+
+`docker exec jenkins ps -ef`{{execute}}
+
+
+
 `([ -d "jenkins_home" ] || mkdir jenkins_home) && cd jenkins_home`{{execute}}
 
 Not as root, should run indefinetely:
@@ -47,12 +66,16 @@ After a minute or two, a config.xml file is created:
 
 `ls -l config.xml*`{{execute}}
 
-secret key:
+For the purpose of this tutorial, we will disable security, so we do not need to go through the hassle of creating an admin user with the initial secret key:
 
 `sed -i.bak -e '/useSecurity/s/true/false/' config.xml`{{execute}}
 
+We have kept the original file as a reference. Let us inspect the difference:
+
+`diff config.xml.bak config.xml`{{execute}}
+
 We need to restart the jenkins java application for the change to take effect:
-P=$(ps -ef | grep jenkins | grep jar | grep -v grep | awk '\''{ print $2}'\'' ); kill $P
+`P=$(ps -ef | grep jenkins | grep jar | grep -v grep | awk '{ print $2}' ); kill $P`{{execute}}
 
 And let us start the jenkins process again:
 
@@ -100,7 +123,7 @@ We can see, that the default is, to run Jenkins with security switched on. For t
 
 sed -i.bak -e '/useSecurity/s/true/false/' config.xml
 
-Wer have kept the original file as a reference. Let us inspect the difference:
+We have kept the original file as a reference. Let us inspect the difference:
 
 diff config.xml config.xml.bak
 
