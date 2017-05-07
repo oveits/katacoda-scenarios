@@ -1,16 +1,28 @@
-The environment has a Jenkins server running as a Docker Container. You can view the status using `docker ps`{{execute}}.
+This is a fork of https://github.com/oveits/jenkins-scenarios of Ben Hall, upgraded from Jenkins 1.651.1 to 2.46.2.
 
-The command used to launch the container was:
+We will prepare an environment with a Jenkins server running as a Docker Container.
 
-`docker run -d -u root --name jenkins \
+First we start the container in detached mode with a while loop. This allows us to prepare the Jenkins environment before we start the application:
+
+`docker run -d -u root --rm --name jenkins \
     -p 8080:8080 -p 50000:50000 \
-    -v /root/jenkins:/var/jenkins_home \
-    jenkins:1.651.1-alpine`
+    --entrypoint bash \
+    jenkins:2.46.2-alpine \
+    -c "tail -F /jenkins.log"`{{execute}}
+    
+With the next command, we clone a Jenkins Home directory into the container, before we start the Jenkins application. The Jenkins Home directory has been prepared to allow us using Jenkins without any login:
 
-All plugins and configurations get persisted to the host at _/root/jenkins_. Port 8080 opens the web dashboard, 50000 is used to communicate with other Jenkins agents. Finally, the image has an alpine base to reduce the size footprint.
+`docker exec -d jenkins \
+    bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
+        && export JENKINS_HOME=$(pwd)/jenkins_home_alpine \
+        && java -jar /usr/share/jenkins/jenkins.war 2>&1 1>/jenkins.log &'`{{execute}}
+
+After a minute or so, we should see that the jenkins.war is started:
+
+`docker exec jenkins ps -ef`{{execute}}
 
 #### Load Dashboard
 
-You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/
+You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/  or by clicking the dashboard tab on the right.
 
 In the next steps, you'll use the dashboard to configure the plugins and start building Docker Images.
