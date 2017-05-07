@@ -10,7 +10,7 @@
 `docker exec -d jenkins \
     bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
         && cd jenkins_home_alpine \
-        && export JENKINS_HOME=`pwd` \
+        && export JENKINS_HOME=$(pwd) \
         && java -jar /usr/share/jenkins/jenkins.war &'`{{execute}}
 
 `docker exec jenkins ps -ef`{{execute}}
