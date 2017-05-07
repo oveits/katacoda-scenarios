@@ -22,7 +22,7 @@ We log into the target:
 
 And print out the contends of the test file:
 
-`cat testfile`{{execute HOST1}}
+`cat ~/testfile`{{execute HOST1}}
 
 The output should be 
 
