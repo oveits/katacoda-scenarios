@@ -4,7 +4,7 @@ The first step is to install the [Github](https://wiki.jenkins-ci.org/display/JE
 
 1. Within the Dashboard, select **Manage Jenkins** on the left.
 2. On the Configuration page, select **Manage Plugins**.
-3. Manage Plugins page will give you a tabbed interface. Click **Available** to view all the Jenkins plugins that can be installed.
+3. Manage Plugins page will give you a tabbed interface. Click **Available** and wait three seconds to view all the Jenkins plugins that can be installed.
 4. Using the search box, search for **Github plugin** and choose the plugin via checkbox.
 5. While on this page, search for **Pipeline** and choose the plugin via checkbox.
 6. Click **Install without Restart** at the bottom.

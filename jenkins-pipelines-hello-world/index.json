@@ -1,7 +1,7 @@
 {
     "pathwayTitle": "Jenkins",
-    "title": "Getting started with Jenkins Pipelines",
-    "description": "Learn how to use Jenkins Pipelines to download and build Github repositories",
+    "title": "Jenkins Pipelines",
+    "description": "Learn how to use Jenkins Pipelines with Git and Maven",
     "difficulty": "Advanced",
     "time": "15-20 minutes",
     "details": {

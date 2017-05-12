@@ -2,6 +2,8 @@ We now will create our first Jenkins Pipeline project.
 
 #### Task: Start pre-configured Jenkins, if you have skipped the previous steps
 
+## DOES NOT WORK YET; PLEASE GOTO NEXT TASK BELOW
+
 If you have skipped step 1 to 3, you now can start with a pre-configured Jenkins installation like follows:
 
 Stop and remove any containers named "jenkins", if required:
@@ -21,9 +23,29 @@ You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMA
 3. On the upper right corner of the Pipeline Script Textbox, find the drop-down menue **try sample pipeline...** and choose **GitHub + Maven**
 4. Review the Groovy code. You will see that we will use git for cloning a sample project and we will build the project using the Maven installation we had named "M3".
 5. Click **Save**
-6. Click **Build Now** in the side menue on the left.
-7. Repeat step 6 several times. Some of the builds will be shown in green (stable), some will be shown in yellow (unstable). This comes from the fact, that the sample project we have chosen randomly throws errors, so we will get a nice Test Trend graph.
-8. In the Browser, reload the page or press F5. Now a Test Result Trend will be shown:
 
-Inline-style: 
-![Jenkins Pipeline Dashboard with Test Result Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png "Jenkins Pipeline Dashboard with Test Result Trend")
+In the next step, we will try it out.
+
+> Note: the image has been created like follows: 
+
+`docker run -d -u root --name jenkins \
+ -p 8080:8080 -p 50000:50000 \
+ --entrypoint bash \
+ jenkins:2.46.2-alpine \
+ -c "tail -F /jenkins.log"
+docker exec -d jenkins \
+ bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
+ && export JENKINS_HOME=$(pwd)/jenkins_home_alpine \
+ && java -jar /usr/share/jenkins/jenkins.war 2>&1 1>/jenkins.log &'`
+
+Perform the manual steps pointed out above.
+
+`docker stop jenkins
+docker commit jenkins newjenkinsimage
+docker run -d --entrypoint "bash" -p 8080:8080 -p 50000:50000 --name jenkins2 newjenkinsimage -c "JENKINS_HOME=/jenkins_home_alpine java -jar /usr/share/jenkins/jenkins.war"
+docker stop jenkins2
+docker login
+oveits
+mypass
+docker commit jenkins2 oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines
+docker push oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines`
