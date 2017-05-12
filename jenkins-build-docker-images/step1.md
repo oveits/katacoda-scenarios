@@ -2,7 +2,7 @@ This is a fork of https://github.com/oveits/jenkins-scenarios of Ben Hall, upgra
 
 We will prepare an environment with a Jenkins server running as a Docker Container.
 
-First we start the container in detached mode with a while loop. This allows us to prepare the Jenkins environment before we start the application:
+First we start the container in detached mode with a tail to a log file we will create and use later:
 
 `docker run -d -u root --rm --name jenkins \
     -p 8080:8080 -p 50000:50000 \
