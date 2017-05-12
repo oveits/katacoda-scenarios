@@ -1,27 +1,48 @@
-We now have a configured Pipeline job that will build our hello world software from Github. The next stage is to test and try it.
+We now will create our first Jenkins Pipeline project.
 
-#### Task: Build
-On the left-hand side, select **Build Now**. You should see that the pipeline is starting.
+#### Task: Create a Pipeline Workflow
 
-1. Click **Build Now** in the side menue on the left.
+1. On the **Jenkins** dashboard, select **create new jobs** under the Welcome message or **new Item* in the sidebar menue.
+2. Give the job a friendly name such as **Pipeline Hello World**, select **Pipeline** and press **OK**.
+3. On the upper right corner of the Pipeline Script Textbox, find the drop-down menue **try sample pipeline...** and choose **GitHub + Maven**
+4. Review the Groovy code. You will see that we will use git for cloning a sample project and we will build the project using the Maven installation we had named "M3".
+5. Click **Save**
 
-Inline-style: 
-![Jenkins Pipeline Dashboard with Test Result Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png "Jenkins Pipeline Dashboard with Test Result Trend")
+In the next step, we will try it out.
 
-[Starting Pipeline](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_10_22-pipeline-hello-world-jenkins.png)
+> Note: the image has been created like follows: 
 
-You can click on the Pipeline field, and you are offered to view the logs:
+`docker run -d -u root --name jenkins \
+ -p 8080:8080 -p 50000:50000 \
+ --entrypoint bash \
+ jenkins:2.46.2-alpine \
+ -c "tail -F /jenkins.log"`{{execute}}
 
-[Logs](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_21_34-pipeline-hello-world-jenkins.png)
+`docker exec -d jenkins \
+ bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
+ && export JENKINS_HOME=$(pwd)/jenkins_home_alpine \
+ && java -jar /usr/share/jenkins/jenkins.war 2>&1 1>/jenkins.log &'`{{execute}}
 
-You will see, that there are some downloads running in the background, when running the build the first time:
+Perform the manual steps 1 to 3.
 
-[Downloads in the Log](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_23_15-pipeline-hello-world-jenkins.png)
+`docker stop jenkins
+docker commit jenkins newjenkinsimage`{{execute}}
 
-2. Repeat the **Build Now** several times. 
+Create a new container with the correct entrypoint and CMD:
+`docker run -d --entrypoint "bash" -p 8080:8080 -p 50000:50000 --name jenkins2 newjenkinsimage -c "JENKINS_HOME=/jenkins_home_alpine java -jar /usr/share/jenkins/jenkins.war"`
 
-Some of the builds will be shown in green (stable), some will be shown in yellow (unstable). This comes from the fact, that the sample project we have chosen randomly throws errors, so we will get a nice Test Trend graph.
+For commiting the 
 
-3. In the Browser, reload the page or press F5. Now a Test Result Trend will be shown:
+`docker stop jenkins2
+docker login`{{execute}}
 
-[Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png)
+Add your user credentials of [Docker Hub](https://hub.docker.com/) here... 
+
+Then: 
+
+`docker commit jenkins2 oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines
+docker push oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines`{{execute}}
+
+Here you need to exchange `oveits` by your own [Docker Hub](https://hub.docker.com/) user name.
+
+Now the image can be used by commands like e.g. `docker run <options> <image> <CMD>`

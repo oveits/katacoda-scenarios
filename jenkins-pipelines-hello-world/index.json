@@ -19,15 +19,15 @@
                 "text": "step3.md"
             },
             {
-                "title": "Create Pipeline Build Project",
+                "title": "Start a pre-configured Jenkins Installation",
                 "text": "step4.md"
             },
             {
-                "title": "Build Project",
+                "title": "Create Pipeline Build Project",
                 "text": "step5.md"
             },
             {
-                "title": "View Console Output",
+                "title": "Build Project and review Results",
                 "text": "step6.md"
             }
         ],

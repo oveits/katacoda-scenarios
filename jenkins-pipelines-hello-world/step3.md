@@ -2,8 +2,6 @@ Once the plugins have been installed, you can configure how pipelines uses Git a
 
 #### Task: Configure Maven Plugin
 
-##### short: Manage Jenkins -> Global Tool Configuration -> Maven -> Maven installations -> Add Maven -> Name M3 -> Install automatically -> Apply
-
 This step configures the Maven plugin.
 
 1. Once again, select **Manage Jenkins**.
@@ -24,4 +22,4 @@ This step configures the Git plugin.
 5. In the Tool Home box, enter **/usr/bin/git**.
 6. Click **Save**  at the bottom of the page.
 
-Jenkins Pipelines can now start using Git and Maven.
+Jenkins Pipelines are now ready to use Git and Maven.

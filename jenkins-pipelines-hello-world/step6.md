@@ -1,13 +1,27 @@
-Once the build has completed you should see the Image and Tags using the Docker CLI `docker images`{{execute}}.
+We now have a configured Pipeline job that will build our hello world software from Github. The next stage is to test and try it.
 
-What was built into the Docker Image was a small HTTP server. You can launch it using:
-`docker run -d -p 80:80 katacoda/jenkins-demo:latest`{{execute}}
+#### Task: Build
+On the left-hand side, select **Build Now**. You should see that the pipeline is starting.
 
-Using cURL you should see the server respond:
-`curl docker`{{execute}}
+1. Click **Build Now** in the side menue on the left.
 
-Jenkins will have the console output of our build, available via the dashboard. You should be able to access it below:
+Inline-style: 
+![Jenkins Pipeline Dashboard with Test Result Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png "Jenkins Pipeline Dashboard with Test Result Trend")
 
-https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/job/Katacoda%20Jenkins%20Demo/1/console
+[Starting Pipeline](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_10_22-pipeline-hello-world-jenkins.png)
 
-If you rebuilt the project, you would see a version 2 image created and the _:latest_ tag reattached.
+You can click on the Pipeline field, and you are offered to view the logs:
+
+[Logs](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_21_34-pipeline-hello-world-jenkins.png)
+
+You will see, that there are some downloads running in the background, when running the build the first time:
+
+[Downloads in the Log](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_23_15-pipeline-hello-world-jenkins.png)
+
+2. Repeat the **Build Now** several times. 
+
+Some of the builds will be shown in green (stable), some will be shown in yellow (unstable). This comes from the fact, that the sample project we have chosen randomly throws errors, so we will get a nice Test Trend graph.
+
+3. In the Browser, reload the page or press F5. Now a Test Result Trend will be shown:
+
+[Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png)

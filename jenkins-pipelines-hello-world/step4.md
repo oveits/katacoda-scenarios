@@ -1,14 +1,14 @@
-We now will create our first Jenkins Pipeline project.
+We now will start a pre-configured Jenkins. You can skip this step, if you have accomplished steps 1-3 successfully.
 
-#### Task: Start pre-configured Jenkins, if you have skipped the previous steps
+#### Task: Start pre-configured Jenkins
 
-## DOES NOT WORK YET; PLEASE GOTO NEXT TASK BELOW
+If you have performed step 1 to 3 already, you can skip this step and go to the next step immediately. If you have skipped setps 1-3, or if they were not successful, follow the following instructions to download a clean pre-configured Jenkins installation:
 
-If you have skipped step 1 to 3, you now can start with a pre-configured Jenkins installation like follows:
-
-Stop and remove any containers named "jenkins", if required:
+1. Stop and remove any containers named "jenkins", if required:
 
 `docker stop jenkins; docker rm jenkins`{{execute}}
+
+2. Download and start a pre-configured Jenkins container.
 
 `docker run -d --rm --name jenkins \
     -p 8080:8080 -p 50000:50000 \
@@ -16,36 +16,39 @@ Stop and remove any containers named "jenkins", if required:
     
 You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/ or by clicking the dashboard tab on the right.
 
-#### Task: Create a Pipeline Workflow
-
-1. On the **Jenkins** dashboard, select **create new jobs** under the Welcome message or **new Item* in the sidebar menue.
-2. Give the job a friendly name such as **Pipeline Hello World**, select **Pipeline** and press **OK**.
-3. On the upper right corner of the Pipeline Script Textbox, find the drop-down menue **try sample pipeline...** and choose **GitHub + Maven**
-4. Review the Groovy code. You will see that we will use git for cloning a sample project and we will build the project using the Maven installation we had named "M3".
-5. Click **Save**
-
-In the next step, we will try it out.
-
 > Note: the image has been created like follows: 
 
 `docker run -d -u root --name jenkins \
  -p 8080:8080 -p 50000:50000 \
  --entrypoint bash \
  jenkins:2.46.2-alpine \
- -c "tail -F /jenkins.log"
-docker exec -d jenkins \
+ -c "tail -F /jenkins.log"`{{execute}}
+
+`docker exec -d jenkins \
  bash -c 'git clone https://github.com/oveits/jenkins_home_alpine \
  && export JENKINS_HOME=$(pwd)/jenkins_home_alpine \
- && java -jar /usr/share/jenkins/jenkins.war 2>&1 1>/jenkins.log &'`
+ && java -jar /usr/share/jenkins/jenkins.war 2>&1 1>/jenkins.log &'`{{execute}}
 
-Perform the manual steps pointed out above.
+Perform the manual steps 1 to 3.
 
 `docker stop jenkins
-docker commit jenkins newjenkinsimage
-docker run -d --entrypoint "bash" -p 8080:8080 -p 50000:50000 --name jenkins2 newjenkinsimage -c "JENKINS_HOME=/jenkins_home_alpine java -jar /usr/share/jenkins/jenkins.war"
-docker stop jenkins2
-docker login
-oveits
-mypass
-docker commit jenkins2 oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines
-docker push oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines`
+docker commit jenkins newjenkinsimage`{{execute}}
+
+Create a new container with the correct entrypoint and CMD:
+`docker run -d --entrypoint "bash" -p 8080:8080 -p 50000:50000 --name jenkins2 newjenkinsimage -c "JENKINS_HOME=/jenkins_home_alpine java -jar /usr/share/jenkins/jenkins.war"`
+
+For commiting the 
+
+`docker stop jenkins2
+docker login`{{execute}}
+
+Add your user credentials of [Docker Hub](https://hub.docker.com/) here... 
+
+Then: 
+
+`docker commit jenkins2 oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines
+docker push oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines`{{execute}}
+
+Here you need to exchange `oveits` by your own [Docker Hub](https://hub.docker.com/) user name.
+
+Now the image can be used by commands like e.g. `docker run <options> <image> <CMD>`
