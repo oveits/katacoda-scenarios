@@ -23,9 +23,6 @@ After a minute or so, we should see that the jenkins.war is started:
 
 #### Load Dashboard
 
-You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/ or by clicking the dashboard tab on the right.
+You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/ or by clicking the dashboard tab on the right (note: sometimes, you need to wait a few seconds and press "display port" at this point).
 
 In the next steps, you'll use the dashboard to configure the plugins and start building Docker Images.
-
-
-docker run -d -u root  --name jenkins     -p 8080:8080 -p 50000:50000     --entrypoint bash     jenkins:2.46.2-alpine     -c "tail -F /jenkins.log"
