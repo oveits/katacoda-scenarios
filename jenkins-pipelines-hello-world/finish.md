@@ -1,3 +1,3 @@
-This scenario took a new Jenkins build and configured it to build Docker Images. We then look an example HTTP server and created a build for it.
+This scenario has started a Jenkins Docker container to configure and run Jenkins Pipelines. With an example project that is throwing random unit test failures, we have demonstrated, how to create and display a test report trend graph. 
 
-Learn how to launch a Private Docker Registry with our [scenario](https://www.katacoda.com/courses/docker-production/launch-private-registry).
+Coming soon: Learn how to automatically trigger a Pipeline workflow with our [triggered pipeline scenario](https://www.katacoda.com/oliverveits/scenarios/jenkins-triggered-pipelines).

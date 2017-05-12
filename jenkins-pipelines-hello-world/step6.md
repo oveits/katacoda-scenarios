@@ -2,10 +2,9 @@ We now have a configured Pipeline job that will build our hello world software f
 
 #### Task: Build
 1. On the left-hand side, select **Build Now**. You should see that the pipeline is starting.
- 
-![Jenkins Pipeline Dashboard with Test Result Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png "Jenkins Pipeline Dashboard with Test Result Trend")
 
-[Starting Pipeline](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_10_22-pipeline-hello-world-jenkins.png)
+
+![Starting Pipeline](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-12_10_22-pipeline-hello-world-jenkins.png)
 
 You can click on the Pipeline field, and you are offered to view the logs:
 
@@ -23,4 +22,6 @@ Some of the builds will be shown in green (stable), some will be shown in yellow
 
 Now a Test Result Trend will be shown:
 
-![Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png)
+![Jenkins Pipeline Dashboard with Test Result Trend](https://oliverveits.files.wordpress.com/2017/05/2017-05-12-10_53_17-pipeline-hello-world-jenkins.png)
+
+SUCCESS!
