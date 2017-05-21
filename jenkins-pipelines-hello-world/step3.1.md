@@ -1,6 +1,6 @@
 Now let us configure Git:
 
-#### Task: Configure Maven Plugin
+#### Task: Configure Git Plugin
 
 This step configures the Git plugin.
 
