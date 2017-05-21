@@ -11,4 +11,4 @@ This step configures the Git plugin.
 5. In the Tool Home box, enter **/usr/bin/git**.
 6. Click **Save**  at the bottom of the page.
 
-Jenkins Pipelines are now ready to use Git and Maven.
+Jenkins Pipelines are now ready to use Git.
