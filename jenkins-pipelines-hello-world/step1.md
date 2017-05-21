@@ -1,6 +1,6 @@
 We will prepare an environment with a Jenkins server running as a Docker Container.
 
-> Note: steps 1 to 3 can be skipped, if you want to head directly to the pipeline section. We will provide a pre-configured Jenkins image in step 4.
+> Note: steps 1 to 4 can be skipped, if you want to head directly to the pipeline section. We will provide a pre-configured Jenkins image in step 5.
 
 First we start the container in detached mode with a tail to a log file we will create and use later:
 
