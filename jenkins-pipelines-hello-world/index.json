@@ -15,9 +15,12 @@
                 "text": "step2.md"
             },
             {
-                "title": "Configure Maven and Git Plugins",
+                "title": "Configure Maven Plugin",
                 "text": "step3.md"
             },
+            {
+                "title": "Configure Git Plugin",
+                "text": "step3.1.md"
             {
                 "title": "Start a pre-configured Jenkins Installation",
                 "text": "step4.md"

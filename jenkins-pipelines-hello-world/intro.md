@@ -4,4 +4,4 @@ The scenario is designed to demostrate how you can use Groovy Pipelines within a
 
 You will learn how to make use of a Docker host environment for running Jenkins in a Docker container. The steps guide you to installing the required plugins, creating and running a Software build process build and viewing the test report results.
 
-For a more verbose introduction into the [Pipeline plugin](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin), see [my blog](http://wp.me/p6C5gC-NZ).
+For a more verbose introduction into the [Pipeline plugin](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin), see [this blog post](http://wp.me/p6C5gC-NZ).

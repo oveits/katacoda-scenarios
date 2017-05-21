@@ -1,17 +1,6 @@
-Once the plugins have been installed, you can configure how pipelines uses Git and Maven to download and build a hello world application. Let us start with Maven:
+Now let us configure Git:
 
 #### Task: Configure Maven Plugin
-
-This step configures the Maven plugin.
-
-1. Once again, select **Manage Jenkins**.
-2. Select **Global Tool Configuration**.
-3. At the bottom, there is a button called **Maven installations...**. Click it.
-4. Choose the name **M3**.
-5. Click the **Install automatically** checkbox and keep the option **Install from Apache** with version 3.5.0.
-6. Click **Apply**  at the bottom of the page.
-
-#### Task: Configure Git Plugin
 
 This step configures the Git plugin.
 
