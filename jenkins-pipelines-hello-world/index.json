@@ -21,6 +21,7 @@
             {
                 "title": "Configure Git Plugin",
                 "text": "step3.1.md"
+            },
             {
                 "title": "Start a pre-configured Jenkins Installation",
                 "text": "step4.md"
