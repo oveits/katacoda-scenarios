@@ -1,19 +1,14 @@
-We now will start a pre-configured Jenkins. You can skip this step, if you have accomplished steps 1-3 successfully.
+Now let us configure Git:
 
-#### Task: Start pre-configured Jenkins
+#### Task: Configure Git Plugin
 
-If you have performed step 1 to 3 already, you can skip this step and go to the next step immediately. If you have skipped setps 1-3, or if they were not successful, follow the following instructions to download a clean pre-configured Jenkins installation:
+This step configures the Git plugin.
 
-1. Stop and remove any containers named "jenkins", if required:
+1. In the **Manage Jenkins -> Global Tool Configuration** page, find the section Git -> Git installations -> **Git**.
+2. Keep the name **Default** and check the **Install automatically** checkbox.
+3. From the **Add Installer** dropdown menue, choose **Run Shell Command**.
+4. Copy the command **which git || (apk update && apk upgrade &&  apk add --no-cache git)** into the Command box. This command is valid for the chosen alpine image only and must be adapted for other Linux distributions.
+5. In the Tool Home box, enter **/usr/bin/git**.
+6. Click **Save**  at the bottom of the page.
 
-`docker stop jenkins; docker rm jenkins`{{execute}}
-
-2. Download and start a pre-configured Jenkins container.
-
-`docker run -d --rm --name jenkins \
-    -p 8080:8080 -p 50000:50000 \
-    oveits/jenkins:2.46.2-alpine-nologin-with-maven-git-pipelines`{{execute}}
-    
-You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/ or by clicking the dashboard tab on the right.
-
-> Note: the steps how the image has been created are described [in Appendix C of this blog post](http://wp.me/p6C5gC-NZ).
+Jenkins Pipelines are now ready to use Git.

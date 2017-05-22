@@ -20,19 +20,19 @@
             },
             {
                 "title": "Configure Git Plugin",
-                "text": "step3.1.md"
-            },
-            {
-                "title": "Start a pre-configured Jenkins Installation",
                 "text": "step4.md"
             },
             {
-                "title": "Create Pipeline Build Project",
+                "title": "Start a pre-configured Jenkins Installation",
                 "text": "step5.md"
             },
             {
-                "title": "Build Project and review Results",
+                "title": "Create Pipeline Build Project",
                 "text": "step6.md"
+            },
+            {
+                "title": "Build Project and review Results",
+                "text": "step7.md"
             }
         ],
         "intro": {
