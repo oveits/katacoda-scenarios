@@ -16,4 +16,4 @@ If you have performed step 1 to 3 already, you can skip this step and go to the 
     
 You can load the Jenkins' dashboard via the following URL https://[[HOST_SUBDOMAIN]]-8080-[[KATACODA_HOST]].environments.katacoda.com/ or by clicking the dashboard tab on the right.
 
-> Note: the steps how the image has been created are described [in Appendix C of this blog post](http://wp.me/p6C5gC-NZ).
+> Note: the steps how the image has been created are described [in the Appendix of this blog post](http://wp.me/p6C5gC-NZ).
