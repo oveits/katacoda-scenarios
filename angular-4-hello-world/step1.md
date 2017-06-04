@@ -1,4 +1,4 @@
-`docker run -it ubuntu bash`{{execute}}
+`docker run -it -p 8080:8080 ubuntu bash`{{execute}}
 
 `apt-get update && apt-get install -y git npm`{{execute}}
 `npm install -g yarn`{{execute}}
@@ -18,6 +18,19 @@
 <app>Loading app...</app>
 </body>
 </html>
+END`{{execute}}
+
+`cat - << END  > index.html
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Angular 4 Hello World&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;app&gt;Loading app...&lt;/app&gt;
+&lt;/body&gt;
+&lt;/html&gt;
 END`{{execute}}
 
 `cat - << END > index.html`{{execute}}
