@@ -42,8 +42,11 @@ END`{{execute}}
 Workaround for Ubuntu:
 `ln -s nodejs /usr/bin/node`{{execute}}
 
+`npm install`{{execute}}
+
+> NOT NEEDED?
 Install webpack locally, see https://stackoverflow.com/questions/29492240/error-cannot-find-module-webpack:
-`npm install webpack-dev-server`{{execute}}
+`npm install webpack webpack-dev-server`{{execute}}
 
 Install html-webpack-plugin, see https://github.com/survivejs/webpack-book/issues/100
 `npm install html-webpack-plugin --save-dev`{{execute}}
@@ -51,9 +54,15 @@ Install html-webpack-plugin, see https://github.com/survivejs/webpack-book/issue
 Install autoprefixer-core, see https://github.com/nDmitry/grunt-postcss/issues/3
 `npm install autoprefixer-core`{{execute}}
 
+`npm i html-loader typescript ts-loader tslint tslint-loader`{{execute}}
+
+> NOT NEEDED? END
+
 
 
 `yarn start`{{execute}}
+
+This should yield `webpack: Failed to compile.`, since 
 
 
 We will prepare an environment with a Jenkins server running as a Docker Container.
