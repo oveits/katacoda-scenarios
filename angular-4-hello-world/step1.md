@@ -20,6 +20,12 @@
 </html>
 END`{{execute}}
 
+`cat - << END > index.html`{{execute}}
+
+`cat - << END > index.html
+bla
+END`{{execute}}
+
 Workaround for Ubuntu:
 `ln -s nodejs /usr/bin/node`{{execute}}
 
