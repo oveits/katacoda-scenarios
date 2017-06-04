@@ -1,5 +1,10 @@
-In this scenario you'll learn how to configure Jenkins to use Groovy-based [Pipelines](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin) for building software from Github. 
+In this scenario you'll learn how to get started with Angular 4. 
 
-The scenario is designed to demostrate how you can use Groovy Pipelines within a CI/CD pipeline to download software code from [GitHub](https://github.com/), perform unit tests and display a historical test result report.
+We will 
+- clone a Angular 4 template,
+- install all necessary packages into a fresh Ubuntu Docker container 
+- create an index file 
+- define a single page Hello World app.
+- view the app in a Browser
 
-We are using a Docker host environment and we will show, how to run Jenkins in a Docker container. The steps guide you to installing the required plugins, creating a build and viewing the test report results.
+The commands are run in a Docker host environment, so you do not need to install anything locally. Instead, you can run all commands in a console within an Internet browser.

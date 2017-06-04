@@ -21,16 +21,16 @@
 END`{{execute}}
 
 `cat - << END  > index.html
-&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
-&lt;head&gt;
-    &lt;meta charset="UTF-8"&gt;
-    &lt;title&gt;Angular 4 Hello World&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;app&gt;Loading app...&lt;/app&gt;
-&lt;/body&gt;
-&lt;/html&gt;
+&lth;!DOCTYPE html&gth;
+&lth;html lang="en"&gth;
+&lth;head&gth;
+    &lth;meta charset="UTF-8"&gth;
+    &lth;title&gth;Angular 4 Hello World&lth;/title&gth;
+&lth;/head&gth;
+&lth;body&gth;
+&lth;app&gth;Loading app...&lth;/app&gth;
+&lth;/body&gth;
+&lth;/html&gth;
 END`{{execute}}
 
 `cat - << END > index.html`{{execute}}
