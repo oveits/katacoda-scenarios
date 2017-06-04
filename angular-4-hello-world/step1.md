@@ -1,7 +1,7 @@
 `docker run -it ubuntu bash`{{execute}}
 
 `apt-get update && apt-get install -y git npm`{{execute}}
-`npm install -g yarn webpack-dev-server`{{execute}}
+`npm install -g yarn`{{execute}}
 
 
 
@@ -29,7 +29,16 @@ END`{{execute}}
 Workaround for Ubuntu:
 `ln -s nodejs /usr/bin/node`{{execute}}
 
-`npm link webpack`{{execute}}
+Install webpack locally, see https://stackoverflow.com/questions/29492240/error-cannot-find-module-webpack:
+`npm install webpack-dev-server`{{execute}}
+
+Install html-webpack-plugin, see https://github.com/survivejs/webpack-book/issues/100
+`npm install html-webpack-plugin --save-dev`{{execute}}
+
+Install autoprefixer-core, see https://github.com/nDmitry/grunt-postcss/issues/3
+`npm install autoprefixer-core`{{execute}}
+
+
 
 `yarn start`{{execute}}
 
