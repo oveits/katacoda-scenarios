@@ -36,8 +36,7 @@ os: linux x64
 
 Now let us create a project:
 
-`cd /localdir && \
-ng new my-project-name  && \
+`ng new my-project-name  && \
 cd my-project-name`{{execute}}
 
 #### Step 4: Start Service

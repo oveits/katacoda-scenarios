@@ -1,3 +1,61 @@
+Install via quickstart (requires low memory)
+
+#### Step 1: Start CentOS Container
+
+`docker run -it -p 3000:3000 centos bash`{{execute}}
+
+#### Step 2: Install Angular CLI
+
+On the container:
+
+`yum install -y epel-release`{{execute}}
+
+Install git and NPM:
+
+`yum install -y git npm`{{execute}}
+
+`npm -v`{{execute}}
+
+Clone the Quickstart Template:
+`git clone https://github.com/angular/quickstart; cd quickstart`{{execute}}
+
+Install packages via NPM:
+
+`npm i`
+
+Start Service:
+
+`npm start`{{execute}}
+
+Check Angular CLI Version:
+
+`ng -v`{{execute}}
+
+Output:
+<pre>    _                      _                 ____ _     ___
+   / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+  / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+ / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+/_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+               |___/
+@angular/cli: 1.1.0
+node: 6.10.3
+os: linux x64
+</pre>
+
+#### Step 3: Create new Project
+
+Now let us create a project:
+
+`ng new my-project-name  && \
+cd my-project-name`{{execute}}
+
+#### Step 4: Start Service
+
+`ng serve --host 0.0.0.0`{{execute}`
+
+
+
 The first step is to install the [Github](https://wiki.jenkins-ci.org/display/JENKINS/GitHub+Plugin) and [Pipeline](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin) plugins, since we will use a Pipeline to clone and build a Github repository.
 
 #### Task: Install Plugins
