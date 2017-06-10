@@ -1,6 +1,6 @@
 #### Step 1: Start CentOS Container
 
-`docker run -it -p 4200:4200 -v $(pwd):/localdir centos bash`{{execute}}
+`docker run -it -p 4200:4200 centos bash`{{execute}}
 
 #### Step 2: Install Angular CLI
 
@@ -21,15 +21,15 @@ Check Angular CLI Version:
 `ng -v`{{execute}}
 
 Output:
-`    _                      _                 ____ _     ___
-   / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
-  / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
- / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
-/_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
-               |___/
-@angular/cli: 1.1.0
-node: 6.10.3
-os: linux x64`
+>    _                      _                 ____ _     ___
+>   / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+>  / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+> / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+>/_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+>               |___/
+>@angular/cli: 1.1.0
+>node: 6.10.3
+>os: linux x64`
 
 #### Step 3: Create new Project
 
