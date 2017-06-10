@@ -1,11 +1,110 @@
-`docker run -it -p 8080:8080 ubuntu bash`{{execute}}
+#### Step 1: Start CentOS Container
+
+`docker run -it -p 4200:4200 -v $(pwd):/localdir centos bash`{{execute}}
+
+#### Step 2: Install Angular CLI
+
+On the container:
+
+`yum install -y epel-release`{{execute}}
+
+Install NodeJS:
+
+`yum install -y nodejs`{{execute}}
+
+Install Angular CLI:
+
+`npm install -g @angular/cli`{{execute}}
+
+Check Angular CLI Version:
+
+`ng -v`{{execute}}
+
+Output:
+`    _                      _                 ____ _     ___
+   / \   _ __   __ _ _   _| | __ _ _ __     / ___| |   |_ _|
+  / △ \ | '_ \ / _` | | | | |/ _` | '__|   | |   | |    | |
+ / ___ \| | | | (_| | |_| | | (_| | |      | |___| |___ | |
+/_/   \_\_| |_|\__, |\__,_|_|\__,_|_|       \____|_____|___|
+               |___/
+@angular/cli: 1.1.0
+node: 6.10.3
+os: linux x64`
+
+#### Step 3: Create new Project
+
+Now let us create a project:
+
+`cd /localdir && \
+ng new my-project-name  && \
+cd my-project-name`{{execute}}
+
+#### Step 4: Start Service
+
+`ng serve --host 0.0.0.0`{{execute}`
+
+Output:
+`> my-project-name@0.0.0 start /localdir/my-project-name
+> ng serve
+
+** NG Live Development Server is listening on localhost:4200, open your browser on http://localhost:4200 **
+Hash: 46f1654c27ac4755fbcd
+Time: 9010ms
+chunk    {0} polyfills.bundle.js, polyfills.bundle.js.map (polyfills) 158 kB {4} [initial] [rendered]
+chunk    {1} main.bundle.js, main.bundle.js.map (main) 5.29 kB {3} [initial] [rendered]
+chunk    {2} styles.bundle.js, styles.bundle.js.map (styles) 10.5 kB {4} [initial] [rendered]
+chunk    {3} vendor.bundle.js, vendor.bundle.js.map (vendor) 2.11 MB [initial] [rendered]
+chunk    {4} inline.bundle.js, inline.bundle.js.map (inline) 0 bytes [entry] [rendered]
+webpack: Compiled successfully.`
+
+
+`docker run -it -p 8080:8080 -v $(pwd):/localdir ubuntu bash`{{execute}}
 
 `apt-get update && apt-get install -y git npm`{{execute}}
-`npm install -g yarn`{{execute}}
+
 
 
 
 `git clone https://github.com/edc4it/angular-webpack-seed.git && cd angular-webpack-seed`{{execute}}
+
+Workaround for Ubuntu:
+`ln -s nodejs /usr/bin/node`{{execute}}
+
+Seems to be needed for npm install to be successful:
+`npm i zone.js`{{execute}}
+
+`npm install`{{execute}}
+
+
+`cat - << END  > index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular 4 Hello World</title>
+</head>
+<body>
+<app>Loading app...</app>
+</body>
+</html>
+END`{{execute}}
+
+Needed for yarn start:
+`npm i -g yarn`{{execute}}
+
+Then:
+`yarn start`{{execute}}
+
+This should yield the error:
+ERROR in multi (webpack)-dev-server/client?http://localhost:8080 ./src/main.ts
+Module not found: Error: Can't resolve './src/main.ts' in '/localdir/angular-webpack-seed'
+ @ multi (webpack)-dev-server/client?http://localhost:8080 ./src/main.ts
+ 
+`touch src/main.ts`{{execute}}
+
+
+> NEEDED or already covered with the npm install?
+`npm install -g yarn`{{execute}}
 
 `cat - << END  > index.html
 <!DOCTYPE html>
@@ -38,11 +137,6 @@ END`{{execute}}
 `cat - << END > index.html
 bla
 END`{{execute}}
-
-Workaround for Ubuntu:
-`ln -s nodejs /usr/bin/node`{{execute}}
-
-`npm install`{{execute}}
 
 > NOT NEEDED?
 Install webpack locally, see https://stackoverflow.com/questions/29492240/error-cannot-find-module-webpack:
