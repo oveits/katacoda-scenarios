@@ -43,5 +43,8 @@ With following example, we can see that a change in a file is detected immediate
 
 `sed -r -i 's/Angular/World/g' src/app/app.component.ts`{{execute}}
 
-In the Dashboard or the Browser, where you have opened the Client, "Hello Angular" is exchanged by "Hello World".
+In the Dashboard or the Browser, where you have opened the Client, 
+"Hello Angular" is automatically exchanged by "Hello World". There is no need 
+to reload the browser manually. You just need to wait for some seconds, 
+depending on your Internet speed.
 
