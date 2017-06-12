@@ -48,3 +48,8 @@ In the Dashboard or the Browser, where you have opened the Client,
 to reload the browser manually. You just need to wait for some seconds, 
 depending on your Internet speed.
 
+To toggle back and to 'Hello Anglar', you can issue the command 
+`sed -r -i 's/World/Angular/g' src/app/app.component.ts`{{execute}}
+.
+
+
