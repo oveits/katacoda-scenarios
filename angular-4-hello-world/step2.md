@@ -29,6 +29,11 @@ Install packages via NPM:
 
 `npm i`{{execute}}
 
+To start over again from here, you can start the Docker container from an image, 
+where all the above steps have been accoplished already:
+
+`docker run -it -p 8080:3000 oveits/angular_hello_world:centos bash`{{execute}}
+
 Start Service:
 
 `npm start &`{{execute}}
