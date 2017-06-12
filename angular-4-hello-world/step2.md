@@ -41,7 +41,7 @@ You can load the angular application on the dashboard or via the following URL h
 
 With following example, we can see that a change in a file is detected immediately and the Appliction is changed accordingly:
 
-`sed -r -i 's/Angular/World/g' app/app.component.ts`{{execute}}
+`sed -r -i 's/Angular/World/g' src/app/app.component.ts`{{execute}}
 
 In the Dashboard or the Browser, where you have opened the Client, "Hello Angular" is exchanged by "Hello World".
 
