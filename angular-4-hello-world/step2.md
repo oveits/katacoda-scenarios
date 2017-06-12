@@ -14,6 +14,10 @@ Install git and NPM:
 
 `yum install -y git npm`{{execute}}
 
+Alternatively we can run the docker container with npm and git already installed:
+
+`docker run -it -p 8080:3000 oveits/centos_npm_git bash`{{execute}}
+
 `npm -v`{{execute}}
 
 #### Step 3: Clone Quickstart Template
