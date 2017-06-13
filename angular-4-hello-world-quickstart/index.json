@@ -1,0 +1,45 @@
+{
+    "pathwayTitle": "Angular",
+    "title": "Angular 4 Hello World via Quickstart",
+    "description": "Learn how to create a simple Angular application",
+    "difficulty": "Basic",
+    "time": "10-15 minutes",
+    "details": {
+        "steps": [
+            {
+                "title": "Preparation: Start Container and install GIT and NPM",
+                "text": "step1.md"
+            },
+            {
+                "title": "NPM: Resolve Dependencies",
+                "text": "step2.md"
+            },
+            {
+                "title": "Start and connect to Service via Browser",
+                "text": "step3.md"
+            },
+            {
+                "title": "Demonstrate binding between model and view",
+                "text": "step4.md"
+            }
+        ],
+        "intro": {
+            "text": "intro.md",
+            "courseData": "courseBase.sh",
+            "credits": ""
+        },
+        "finish": {
+            "text": "finish.md"
+        }
+    },
+    "environment": {
+        "showdashboard": true,
+        "dashboard": "Dashboard",
+        "uilayout": "terminal-iframe",
+        "uimessage1": "\u001b[32mYour Interactive Bash Terminal.\u001b[m\r\n"
+    },
+    "backend": {
+        "imageid": "docker",
+        "port": 8080
+    }
+}
