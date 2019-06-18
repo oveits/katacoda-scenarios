@@ -1,4 +1,4 @@
-In this scenario you'll dog into an increasingly popular Jenkins plugin named [Pipeline](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin). It uses Groovy scripts to define Jenkins workflows as code.
+In this scenario you'll dig into an increasingly popular Jenkins plugin named [Pipeline](https://wiki.jenkins-ci.org/display/JENKINS/Pipeline+Plugin). It uses Groovy scripts to define Jenkins workflows as code.
 
 The scenario is designed to demostrate how you can use Groovy Pipelines within a Continuous Intagration/Delivery (CI/CD) workflow to download software code from [GitHub](https://github.com/), perform unit tests and display a historical test result report.
 
