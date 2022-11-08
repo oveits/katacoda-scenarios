@@ -1,6 +1,6 @@
 #### Step 1: Start CentOS Container
 
-`docker run -it -p 4200:4200 centos bash`{{execute}}
+`docker run -it -p 4200:4200 centos:7 bash`{{execute}}
 
 #### Step 2: Install Angular CLI
 
