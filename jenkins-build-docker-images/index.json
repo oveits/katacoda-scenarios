@@ -1,7 +1,7 @@
 {
     "pathwayTitle": "Jenkins",
     "title": "Building Docker Images using Jenkins v2.46.2",
-    "description": "Learn how to configure Jenkins to build Docker Images inside of Docker Container Slaves",
+    "description": "- Not fully tested in new killercoda environment - Learn how to configure Jenkins to build Docker Images inside of Docker Container Slaves",
     "difficulty": "Advanced",
     "time": "15-20 minutes",
     "details": {
