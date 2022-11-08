@@ -1,7 +1,7 @@
 {
     "pathwayTitle": "Jenkins",
     "title": "Angular 4 Hello World",
-    "description": "NOT WORKING working because of too low memory on the container",
+    "description": "NOT WORKING because of too low memory on the container",
     "difficulty": "Advanced",
     "time": "15-20 minutes",
     "details": {
